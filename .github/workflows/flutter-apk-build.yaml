@@ -1,15 +1,18 @@
-name: Flutter -Android Build Dev
+name: Flutter-Android Build Dev
+
 on:
   push:
     branches:
       - main
+
   pull_request:
-    branches;
-    - main
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,12 +26,11 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          channel: stable
           flutter-version: 3.27.3
 
       - name: Install dependencies
         run: flutter pub get
 
       - name: Build APK
-        run: flutter build apk --debug --build-name:1.0.0 --build-number=1
-
+        run: flutter build apk --debug --build-name=1.0.0 --build-number=1
