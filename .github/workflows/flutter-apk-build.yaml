@@ -11,17 +11,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'zulu'
+#      - name: Setup JDK
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: '17'
+#          distribution: 'zulu'
 
       - name: Setup Base URL FIle
         run: echo "${{ secrets.BASE_URL_FILE }}" | base64 --decode > lib/main.dart
@@ -35,5 +35,11 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk --debug --build-name=1.0.0 --build-number=1
+      - name: Install iOS dependencies
+        run : |
+          cd iOS
+          pod install --repo update
+          cd ..
+
+      - name: Build iOS
+        run: flutter build ipa --debug --build-name=1.0.0 --build-number=1
